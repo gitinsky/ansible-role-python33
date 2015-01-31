@@ -1,0 +1,59 @@
+- name: install gcc
+  yum: name=gcc state=present
+
+- name: install zlib-devel
+  yum: name=zlib-devel state=present
+
+- name: install bzip2-devel
+  yum: name=bzip2-devel state=present
+
+- name: install openssl-devel
+  yum: name=openssl-devel state=present
+
+- name: install ncurses-devel
+  yum: name=ncurses-devel state=present
+
+- name: install sqlite-devel
+  yum: name=sqlite-devel state=present
+
+- name: install readline-devel
+  yum: name=readline-devel state=present
+
+- name: install tk-devel
+  yum: name=tk-devel state=present
+
+- name: install gdbm-devel
+  yum: name=gdbm-devel state=present
+
+- name: install db4-devel
+  yum: name=db4-devel state=present
+
+- name: install libpcap-devel
+  yum: name=libpcap-devel state=present
+
+- name: install xz-devel
+  yum: name=xz-devel state=present
+
+- name: download Python
+  get_url: url=http://python.org/ftp/python/3.3.5/Python-3.3.5.tar.xz dest=/root/Python-3.3.5.tar.xz
+
+- name: unpack Python
+  shell: cd /root && tar xf Python-3.3.5.tar.xz creates=/root/Python-3.3.5
+
+- name: configure Python
+  shell: cd /root/Python-3.3.5 && ./configure --prefix=/usr/local --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" creates=/root/Python-3.3.5/Makefile
+
+- name: make Python
+  shell: cd /root/Python-3.3.5 && make creates=/root/Python-3.3.5/python
+
+- name: install Python
+  shell: cd /root/Python-3.3.5 && make altinstall creates=/usr/local/bin/python3.3
+
+- name: install setuptools
+  shell: wget -O - --quiet https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python3.3 creates=/usr/local/bin/easy_install-3.3
+
+- name: install pip
+  shell: /usr/local/bin/easy_install-3.3 pip creates=/usr/local/bin/pip3.3
+
+- name: install virtualenv
+  pip: name=virtualenv executable=pip3.3
