@@ -37,6 +37,9 @@
 - name: download Python
   get_url: url=http://python.org/ftp/python/3.3.5/Python-3.3.5.tar.xz dest=/root/Python-3.3.5.tar.xz
 
+- name: install xz
+  yum: name=xz state=present
+
 - name: unpack Python
   shell: cd /root && tar xf Python-3.3.5.tar.xz creates=/root/Python-3.3.5
 
